@@ -28,7 +28,7 @@ $result = $query->execute();
 if ($result) {
     echo "<script>
     alert('เพิ่มข้อมูลเรียบร้อย');
-    window.location='success.php';
+    window.location='showdata_letter.php';
     </script>";
 } else {
     echo "<script>
