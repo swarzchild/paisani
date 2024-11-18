@@ -1,114 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Show Data</title>
-    <style>
-        body {
-            background-color: #f4f9fd;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+<a href="form_add_letter.php"><h2>Add Letter</h2></a>
+<?php //ไฟล์นี้สำหรับแสดงข้อมูลในตาราง letter
+include('config.php');
+$sql = "SELECT * FROM letter";
+$query = $dbcon->prepare($sql);
+$query->execute();
+$result = $query->fetchAll(PDO::FETCH_OBJ);
 
-        .envelope-container {
-    width: 80%;
-    max-width: 600px;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: white;
+if ($query->rowCount() > 0) {
+    echo "<table border='1'>";
+    echo "<tr>";
+    echo "<th>ID</th>
+          <th>Fnamesend</th>
+          <th>Lnamesend</th>
+          <th>Pnumsend</th>
+          <th>Fnamereci</th>
+          <th>Lnamereci</th>
+          <th>Pnumreci</th>
+          <th>Cityreci</th>
+          <th>UMreci</th>
+          <th>TUMreci</th>
+          <th>Hnumreci</th>
+          <th>Preci</th>
+          <th>TUreci</th>
+          <th>Date</th>
+          <th colspan='2'>ฟังก์ชั่น</th>";
+    foreach($result as $res) {
+        echo "<tr>";
+        echo "<td>" . $res->id . "</td>";
+        echo "<td>" . $res->Fnamesend . "</td>";
+        echo "<td>" . $res->Lnamesend . "</td>";
+        echo "<td>" . $res->Pnumsend . "</td>";
+        echo "<td>" . $res->Fnamereci . "</td>";
+        echo "<td>" . $res->Lnamereci . "</td>";
+        echo "<td>" . $res->Pnumreci . "</td>";
+        echo "<td>" . $res->cityreci . "</td>";
+        echo "<td>" . $res->UMreci . "</td>";
+        echo "<td>" . $res->TUMreci . "</td>";
+        echo "<td>" . $res->Hnumreci . "</td>";
+        echo "<td>" . $res->Preci . "</td>";
+        echo "<td>" . $res->TUreci . "</td>";
+        echo "<td>" . $res->date . "</td>";
+        echo "<td> <a href='deletedata_letter.php?id=$res->id'>ลบซะ</a></td>";
+        echo "<td> <a href='updatefrom.php?id=$res->id'>Update</a></td>";
+        echo "</tr>";
+    }
+    echo "</table>";
 }
-
-.sender-info, .receiver-info {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    margin-bottom: 20px;
-}
-
-.sender-info {
-    text-align: right;
-}
-
-.receiver-info {
-    text-align: left;
-}
-
-
-        h3 {
-            color: #0d6efd;
-            font-size: 1.2rem;
-        }
-
-        .table {
-            margin-bottom: 0;
-        }
-    </style>
-</head>
-<body>
-    <?php
-    // รับข้อมูลจากฟอร์ม
-    $Fnamesend = $_GET['Fnamesend']; 
-    $Lnamesend = $_GET['Lnamesend'];
-    $Pnumsend = $_GET['Pnumsend'];
-    $Fnamereci = $_GET['Fnamereci'];
-    $Lnamereci = $_GET['Lnamereci'];
-    $Pnumreci = $_GET['Pnumreci'];
-    $cityreci = $_GET['cityreci'];
-    $UMreci = $_GET['UMreci'];
-    $TUMreci = $_GET['TUMreci'];
-    $Hnumreci = $_GET['Hnumreci'];
-    $Preci = $_GET['Preci'];
-    $TUreci = $_GET['TUreci'];
-    $date = $_GET['date'];
-    ?>
-    
-    <div class="envelope-container">
-        <!-- ข้อมูลผู้ส่ง -->
-        <div class="sender-info">
-            <h3>ข้อมูลผู้ส่ง</h3>
-            <table class="table table-sm">
-                <tr>
-                    <td><strong>ชื่อ-นามสกุล:</strong></td>
-                    <td><?php echo $Fnamesend . " " . $Lnamesend; ?></td>
-                </tr>
-                <tr>
-                    <td><strong>เบอร์ติดต่อ:</strong></td>
-                    <td><?php echo $Pnumsend; ?></td>
-            </table>
-        </div>
-        
-        <!-- ข้อมูลผู้รับ -->
-        <div class="receiver-info">
-            <h3>ข้อมูลผู้รับ</h3>
-            <table class="table table-sm">
-                <tr>
-                    <td><strong>ชื่อ-นามสกุล:</strong></td>
-                    <td><?php echo $Fnamereci . " " . $Lnamereci; ?></td>
-                </tr>
-                <tr>
-                    <td><strong>เบอร์ติดต่อ:</strong></td>
-                    <td><?php echo $Pnumreci; ?></td>
-                </tr>
-                <tr>
-                    <td><strong>ที่อยู่:</strong></td>
-                    <td><?php echo $Hnumreci . ", " . $TUMreci . ", " . $UMreci . ", " . $cityreci; ?></td>
-                </tr>
-                <tr>
-                    <td><strong>รหัสไปรษณีย์:</strong></td>
-                    <td><?php echo $Preci; ?></td>
-                </tr>
-                <tr>
-                    <td><strong>รายละเอียด:</strong></td>
-                    <td><?php echo $TUreci; ?></td>
-                </tr>
-            </table>
-        </div>
-    </div>
-</body>
-</html>
+?>
