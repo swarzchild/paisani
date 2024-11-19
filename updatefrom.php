@@ -57,113 +57,101 @@ if (!$result) {
             <h2>ข้อมูลผู้ส่ง</h2>
             <div class="mb-3">
                 <label class="form-label">ชื่อผู้ส่ง</label>
-                <div class="row">
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="ชื่อ" aria-label="First name" name="Fnamesend" value="<?php echo htmlspecialchars($result['Fnamesend']); ?>" required>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="นามสกุล" aria-label="Last name" name="Lnamesend" value="<?php echo htmlspecialchars($result['Lnamesend']); ?>" required>
-                    </div>
-                </div>
+                <input type="text" class="form-control" name="Sname" value="<?php echo htmlspecialchars($result['Sname']); ?>" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">เบอร์ติดต่อ</label>
-                <input type="text" class="form-control" name="Pnumsend" value="<?php echo htmlspecialchars($result['Pnumsend']); ?>" required>
+                <label class="form-label">เบอร์ติดต่อผู้ส่ง</label>
+                <input type="text" class="form-control" name="PS" value="<?php echo htmlspecialchars($result['PS']); ?>" required>
             </div>
             
             <h2>ข้อมูลผู้รับ</h2>
             <div class="mb-3">
                 <label class="form-label">ชื่อผู้รับ</label>
-                <div class="row">
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="ชื่อ" aria-label="First name" name="Fnamereci" value="<?php echo htmlspecialchars($result['Fnamereci']); ?>" required>
-                    </div>
-                    <div class="col">
-                        <input type="text" class="form-control" placeholder="นามสกุล" aria-label="Last name" name="Lnamereci" value="<?php echo htmlspecialchars($result['Lnamereci']); ?>" required>
-                    </div>
-                </div>
+                <input type="text" class="form-control" name="Rname" value="<?php echo htmlspecialchars($result['Rname']); ?>" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">เบอร์ติดต่อ</label>
-                <input type="text" class="form-control" name="Pnumreci" value="<?php echo htmlspecialchars($result['Pnumreci']); ?>" required>
+                <label class="form-label">เบอร์ติดต่อผู้รับ</label>
+                <input type="text" class="form-control" name="PR" value="<?php echo htmlspecialchars($result['PR']); ?>" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">จังหวัด</label>
-                <select class="form-select" name="cityreci" required onchange="updateDistricts()">
+                <select class="form-select" name="city" required onchange="updateDistricts()">
                     <option selected disabled value="">เลือกจังหวัด</option>
-                    <option value="ratchaburi" <?php echo ($result['cityreci'] == 'ratchaburi') ? 'selected' : ''; ?>>ราชบุรี</option>
+                    <option value="ratchaburi" <?php echo ($result['city'] == 'ratchaburi') ? 'selected' : ''; ?>>ราชบุรี</option>
                 </select>
             </div>
             <div class="mb-3">
                 <label class="form-label">อำเภอ/เขต</label>
-                <select class="form-select" id="district" name="UMreci" required onchange="updateSubdistricts()">
+                <select class="form-select" id="district" name="subcity" required onchange="updateSubdistricts()">
                     <option selected disabled value="">เลือกอำเภอ/เขต</option>
                 </select>
             </div>
             <div class="mb-3">
                 <label class="form-label">ตำบล</label>
-                <select class="form-select" id="subdistrict" name="TUMreci" required>
+                <select class="form-select" id="subdistrict" name="subsubcity" required>
                     <option selected disabled value="">เลือกตำบล</option>
                 </select>
             </div>
             <div class="row mb-3">
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="บ้านเลขที่" name="Hnumreci" value="<?php echo htmlspecialchars($result['Hnumreci']); ?>" required>
+                    <input type="text" class="form-control" placeholder="บ้านเลขที่" name="Hnumber" value="<?php echo htmlspecialchars($result['Hnumber']); ?>" required>
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control" placeholder="รหัสไปรษณีย์" name="Preci" value="<?php echo htmlspecialchars($result['Preci']); ?>" required>
+                    <input type="text" class="form-control" placeholder="รหัสไปรษณีย์" name="Pcode" value="<?php echo htmlspecialchars($result['Pcode']); ?>" required>
                 </div>
             </div>
             <div class="mb-3">
                 <label class="form-label">รายละเอียดที่อยู่</label>
-                <input type="text" class="form-control" name="TUreci" value="<?php echo htmlspecialchars($result['TUreci']); ?>" required>
+                <input type="text" class="form-control" name="TU" value="<?php echo htmlspecialchars($result['TU']); ?>" required>
             </div>
             <label>วันที่สั่ง</label>
             <input type="date" class="form-control" name="date" value="<?php echo htmlspecialchars($result['date']); ?>" required>
             <button class="btn btn-primary" type="submit">Update</button>
         </form>
     </div>
+
     <script>
+        // JavaScript สำหรับการอัปเดตอำเภอและตำบล
         const districtsData = {
-        ratchaburi: ["อำเภอเมืองราชบุรี", "อำเภอบ้านโป่ง", "อำเภอโพธาราม", "อำเภอดำเนินสะดวก"]
-    };
+            ratchaburi: ["อำเภอเมืองราชบุรี", "อำเภอบ้านโป่ง", "อำเภอโพธาราม", "อำเภอดำเนินสะดวก"]
+        };
 
-    const subdistrictsData = {
-        "อำเภอเมืองราชบุรี": ["ตำบลหน้าเมือง", "ตำบลเจดีย์หัก"],
-        "อำเภอบ้านโป่ง": ["ตำบลบ้านโป่ง", "ตำบลหนองกบ"],
-        "อำเภอโพธาราม": ["ตำบลคลองตาคต", "ตำบลบ้านฆ้อง"],
-        "อำเภอดำเนินสะดวก": ["ตำบลดำเนินสะดวก", "ตำบลประสาทสิทธิ์"]
-    };
+        const subdistrictsData = {
+            "อำเภอเมืองราชบุรี": ["ตำบลหน้าเมือง", "ตำบลเจดีย์หัก"],
+            "อำเภอบ้านโป่ง": ["ตำบลบ้านโป่ง", "ตำบลหนองกบ"],
+            "อำเภอโพธาราม": ["ตำบลคลองตาคต", "ตำบลบ้านฆ้อง"],
+            "อำเภอดำเนินสะดวก": ["ตำบลดำเนินสะดวก", "ตำบลประสาทสิทธิ์"]
+        };
 
-    function updateDistricts() {
-        const province = document.getElementById("province").value;
-        const districtSelect = document.getElementById("district");
-        districtSelect.innerHTML = '<option selected disabled value="">เลือกอำเภอ/เขต</option>';
+        function updateDistricts() {
+            const province = document.querySelector("select[name='city']").value;
+            const districtSelect = document.getElementById("district");
+            districtSelect.innerHTML = '<option selected disabled value="">เลือกอำเภอ/เขต</option>';
 
-        if (province && districtsData[province]) {
-            districtsData[province].forEach(district => {
-                const option = document.createElement("option");
-                option.value = district;
-                option.text = district;
-                districtSelect.appendChild(option);
-            });
+            if (province && districtsData[province]) {
+                districtsData[province].forEach(district => {
+                    const option = document.createElement("option");
+                    option.value = district;
+                    option.text = district;
+                    districtSelect.appendChild(option);
+                });
+            }
         }
-    }
 
-    function updateSubdistricts() {
-        const district = document.getElementById("district").value;
-        const subdistrictSelect = document.getElementById("subdistrict");
-        subdistrictSelect.innerHTML = '<option selected disabled value="">เลือกตำบล</option>';
+        function updateSubdistricts() {
+            const district = document.getElementById("district").value;
+            const subdistrictSelect = document.getElementById("subdistrict");
+            subdistrictSelect.innerHTML = '<option selected disabled value="">เลือกตำบล</option>';
 
-        if (district && subdistrictsData[district]) {
-            subdistrictsData[district].forEach(subdistrict => {
-                const option = document.createElement("option");
-                option.value = subdistrict;
-                option.text = subdistrict;
-                subdistrictSelect.appendChild(option);
-            });
+            if (district && subdistrictsData[district]) {
+                subdistrictsData[district].forEach(subdistrict => {
+                    const option = document.createElement("option");
+                    option.value = subdistrict;
+                    option.text = subdistrict;
+                    subdistrictSelect.appendChild(option);
+                });
+            }
         }
-    }
     </script>
 </body>
 </html>
